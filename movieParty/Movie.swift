@@ -8,13 +8,15 @@
 
 import Foundation
 
-struct Movie {
+class Movie {
     let title: String
     let year: String
     let imdbID: String
     let posterURL: String
     var plot: String? = nil
     var genre: String? = nil
+
+    
     
     init(title: String, year: String, imdbID: String, posterURL: String) {
         self.title = title
@@ -23,7 +25,7 @@ struct Movie {
         self.posterURL = posterURL
     }
     
-    mutating func addDetailedInfo(plot: String, genre: String) {
+    func addDetailedInfo(plot: String, genre: String) {
         self.plot = plot
         self.genre = genre
     }

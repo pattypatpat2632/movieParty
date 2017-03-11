@@ -13,6 +13,7 @@ private let reuseIdentifier = "movieCell"
 class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
     let store = DataStore.sharedInstance
     var movies: [Movie] = []
+    var displayedMovies: [Movie] = []
     weak var globalMovieSearchBar: UISearchBar!
     
     
@@ -26,32 +27,34 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
         store.delegate = self
     }
 
-    /*
-
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        guard segue.identifier == "movieDetailSegue" else {print("segue identifier error"); return}
+        let indexPaths = self.collectionView?.indexPathsForSelectedItems
+        print(indexPaths?[0].item)
+        if let selectedCell = indexPaths?[0].item {
+            OmdbApiClient.getDetailedInfo(forTitle: displayedMovies[selectedCell].title)
+        var dest = segue.destination as! ViewController
+        dest.movie = displayedMovies[selectedCell]
+            print("selected movie! \(displayedMovies[selectedCell].title)")
+        }
     }
-    */
+ 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("number of movies \(movies.count)")
         return movies.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CollectionCellView
-       
         cell?.movie = movies[indexPath.item]
-        print ("dequeueCell done")
+        if let movie = cell?.movie {
+        displayedMovies.append(movie)
+        }
         return cell!
     }
 
  
     func updateWithNewMovies(movies: [Movie]) {
-        print("view controller is updating with new movies")
         self.movies = movies
         self.collectionView?.reloadData()
     }
@@ -60,15 +63,13 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
         guard let searchString = globalMovieSearchBar.text else {return}
         globalMovieSearchBar.text = ""
         movies = []
+        displayedMovies = []
         DispatchQueue.main.async{
         self.collectionView?.reloadData()
        }
-        print ("asked for movies")
 
         OmdbApiClient.getMeSomeMovies(titleSearch: searchString)
-        
         self.collectionView?.reloadData()
-        
     }
     
     

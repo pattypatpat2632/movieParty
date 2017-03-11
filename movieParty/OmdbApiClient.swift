@@ -11,7 +11,7 @@ import Foundation
 
 class OmdbApiClient{
     static weak var movieSearchDelegate: MovieSearchDelegate? = DataStore.sharedInstance
-    
+   
     class func getMeSomeMovies (titleSearch:String){
         print("getMeSomeMovies called")
         let titleSearchF = formatForSearch(titleSearch)
@@ -33,8 +33,31 @@ class OmdbApiClient{
                     }
                 }
             }catch{}
-            
         })
+        task.resume()
+    }
+    
+    class func getDetailedInfo(forTitle title: String) {
+        print("get detailed info called")
+        let temp = title.components(separatedBy: CharacterSet(charactersIn: " ,./`!@#$%^&*()_{}|[]<>?:"))
+        let formattedTitle = temp.joined(separator: "+")
+        let omdbAddr = "https://omdbapi.com/?t=" + formattedTitle
+        let omdbURL = URL(string: omdbAddr)
+        let session = URLSession.shared
+        guard let omdbURLuw = omdbURL else {print("detailed OMDB info not retrieved"); return}
+        print("url check complete")
+        let task = session.dataTask(with: omdbURLuw) { (data, response, error) in
+            do {
+                guard let data = data else {print("no detailed movie data returned"); return}
+                let sessionData = try JSONSerialization.jsonObject(with: data, options: [])
+                print(sessionData)
+                if let searchResults = sessionData as? [String : String] {
+                    DataStore.sharedInstance.updateWithDetailedData(data: searchResults)
+                }
+            } catch {
+                //no catch statements
+            }
+        }
         task.resume()
     }
 
@@ -45,7 +68,11 @@ class OmdbApiClient{
     
 }
 
-protocol MovieSearchDelegate:class{
+protocol MovieSearchDelegate: class {
+    
     func updateWithNewData(data: [[String:Any]])
+    func updateWithDetailedData(data: [String : String])
     
 }
+
+

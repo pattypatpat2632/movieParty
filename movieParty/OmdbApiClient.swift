@@ -31,21 +31,12 @@ class OmdbApiClient{
                         movieSearchDelegate?.updateWithNewData(data: searchResults)
                     }
                 }
-                
-                
             }catch{}
             
         })
         task.resume()
-        
-//        class func getASpecificMovie(titleSearch: String){
-//            print ()
-//        }
-//        
     }
-    
-    
-    
+
     fileprivate class func formatForSearch(_ searchString: String) -> String{
         let temp = searchString.components(separatedBy: CharacterSet(charactersIn: " ,./`!@#$%^&*()_{}|[]<>?:"))
         return temp.joined(separator: "+")
@@ -55,4 +46,5 @@ class OmdbApiClient{
 
 protocol MovieSearchDelegate:class{
     func updateWithNewData(data: [[String:Any]])
+    
 }

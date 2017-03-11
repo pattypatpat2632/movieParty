@@ -15,6 +15,7 @@ class DataStore: MovieSearchDelegate {
     weak var delegate: DataStoreDelegate?
     
     
+    
     private init() {
         
     }
@@ -26,7 +27,7 @@ class DataStore: MovieSearchDelegate {
             let year = dictionary["Year"] as? String ?? ""
             let imdbID = dictionary["imdbID"] as? String ?? ""
             let posterURL = dictionary["Poster"] as? String ?? ""
-            let newMovie = Movie(title: title, year: year, imdbID: imdbID, posterURL: posterURL)
+            var newMovie = Movie(title: title, year: year, imdbID: imdbID, posterURL: posterURL)
             movies.append(newMovie)
             print(newMovie.title)
         }
@@ -37,6 +38,7 @@ class DataStore: MovieSearchDelegate {
     func getMovies() -> [Movie] {
         return movies
     }
+    
 }
 
 protocol DataStoreDelegate: class {

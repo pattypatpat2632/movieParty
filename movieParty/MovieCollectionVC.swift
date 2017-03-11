@@ -19,22 +19,11 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         var movieSearchBar = UISearchBar()
         navigationItem.titleView = movieSearchBar
         movieSearchBar.sizeToFit()
         globalMovieSearchBar = movieSearchBar
-        
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
         store.delegate = self
-        
     }
 
     /*
@@ -48,7 +37,6 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
     */
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         print("number of movies \(movies.count)")
         return movies.count
     }
@@ -72,12 +60,14 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
         guard let searchString = globalMovieSearchBar.text else {return}
         globalMovieSearchBar.text = ""
         movies = []
-        self.collectionView?.reloadData()
         DispatchQueue.main.async{
-            OmdbApiClient.getMeSomeMovies(titleSearch: searchString)
-            print ("asked for movies")
-        }
+        self.collectionView?.reloadData()
+       }
+        print ("asked for movies")
+
+        OmdbApiClient.getMeSomeMovies(titleSearch: searchString)
         
+        self.collectionView?.reloadData()
         
     }
     

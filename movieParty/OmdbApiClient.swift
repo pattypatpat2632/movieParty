@@ -6,8 +6,6 @@
 //  Copyright © 2017 Dawn Trigger Entertainment. All rights reserved.
 //
 
-
-//created new branch
 import Foundation
 
 class OmdbApiClient{

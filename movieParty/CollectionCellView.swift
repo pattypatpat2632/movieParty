@@ -12,10 +12,10 @@ class CollectionCellView: UICollectionViewCell {
 
     var movie: Movie?{
         didSet{
-            print("movie value for COllection Cell has been set")
+            //print("movie value for COllection Cell has been set")
             if let movie = movie{
                 posterLabel.text = movie.title + "-" + movie.year
-                print("labels for movie cell should be set")
+                //print("labels for movie cell should be set")
             }
         }
     }

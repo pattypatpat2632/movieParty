@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,7 +45,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="posterLabel" destination="Jr0-Ph-VrU" id="mWn-Qg-kdu"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="Pnz-qw-VM9"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="movieDetailSegue" id="Pnz-qw-VM9"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -75,8 +77,64 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZWX-tU-Ndq">
+                                <rect key="frame" x="125" y="91" width="124" height="183.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ZWX-tU-Ndq" secondAttribute="height" multiplier="27:40" id="tuu-zH-Ipz"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMb-ol-iI3">
+                                <rect key="frame" x="171" y="323" width="33.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plot" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FjI-EU-iCb">
+                                <rect key="frame" x="37.5" y="401" width="300" height="200"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbw-HQ-h3a">
+                                <rect key="frame" x="187.5" y="352" width="187.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoM-X1-9TS">
+                                <rect key="frame" x="0.5" y="351" width="187.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="gMb-ol-iI3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1yP-ZS-FcE"/>
+                            <constraint firstItem="FjI-EU-iCb" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="9uL-fg-mvS"/>
+                            <constraint firstItem="FjI-EU-iCb" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.3" id="CgI-n6-Wm6"/>
+                            <constraint firstItem="vbw-HQ-h3a" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="DvA-hM-BCN"/>
+                            <constraint firstItem="gMb-ol-iI3" firstAttribute="top" secondItem="ZWX-tU-Ndq" secondAttribute="bottom" constant="48.5" id="G4D-P6-u8x"/>
+                            <constraint firstItem="ZWX-tU-Ndq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="27" id="Krd-dq-2ZI"/>
+                            <constraint firstItem="OoM-X1-9TS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" multiplier="0.5" id="PqN-Sh-vRX"/>
+                            <constraint firstItem="vbw-HQ-h3a" firstAttribute="top" secondItem="gMb-ol-iI3" secondAttribute="bottom" constant="8" id="Zgm-vs-cz6"/>
+                            <constraint firstItem="OoM-X1-9TS" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="alJ-EF-QQM"/>
+                            <constraint firstItem="OoM-X1-9TS" firstAttribute="top" secondItem="gMb-ol-iI3" secondAttribute="bottom" constant="7" id="bh6-mi-NF0"/>
+                            <constraint firstItem="ZWX-tU-Ndq" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.33" id="lEo-ej-whO"/>
+                            <constraint firstItem="FjI-EU-iCb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n4z-D2-83e"/>
+                            <constraint firstItem="ZWX-tU-Ndq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sVn-kh-Gtg"/>
+                            <constraint firstItem="vbw-HQ-h3a" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" multiplier="1.5" id="txj-QX-Bww"/>
+                            <constraint firstItem="FjI-EU-iCb" firstAttribute="top" secondItem="OoM-X1-9TS" secondAttribute="bottom" constant="29" id="vKp-IY-nFz"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="genreLabel" destination="vbw-HQ-h3a" id="lai-H1-ftj"/>
+                        <outlet property="plotLabel" destination="FjI-EU-iCb" id="tE3-D5-vhS"/>
+                        <outlet property="posterImage" destination="ZWX-tU-Ndq" id="IdB-qt-EgM"/>
+                        <outlet property="titleLabel" destination="gMb-ol-iI3" id="L31-Ws-wbJ"/>
+                        <outlet property="yearLabel" destination="OoM-X1-9TS" id="95e-7W-5YI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

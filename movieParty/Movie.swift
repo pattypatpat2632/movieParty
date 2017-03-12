@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Movie {
     let title: String
@@ -15,6 +16,7 @@ class Movie {
     let posterURL: String
     var plot: String? = nil
     var genre: String? = nil
+    var movieImage = UIImage()
 
     
     

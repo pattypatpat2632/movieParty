@@ -60,6 +60,22 @@ class OmdbApiClient{
         }
         task.resume()
     }
+    
+    class func getImage(atUrl imageURLString: String, with completion: @escaping (Data) -> Void) {
+        print("function to get image from URL has been called")
+        var imageURL = URL(string: imageURLString)
+        guard let imageURLuw = imageURL else {print("Image could not be found"); return}
+        let session = URLSession.shared
+        let task = session.dataTask(with: imageURLuw) { (data, response, error) in
+            if let data = data {
+                print("image data succesfully found")
+                completion(data)
+            } else {
+                print("image url returned no data")
+            }
+        }
+        task.resume()
+    }
 
     fileprivate class func formatForSearch(_ searchString: String) -> String{
         let temp = searchString.components(separatedBy: CharacterSet(charactersIn: " ,./`!@#$%^&*()_{}|[]<>?:"))

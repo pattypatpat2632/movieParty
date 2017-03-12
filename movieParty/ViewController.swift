@@ -13,9 +13,9 @@ class ViewController: UIViewController {
     var movie: Movie? = nil
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var plotLabel: UILabel!
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
+    @IBOutlet weak var plotField: UITextView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +29,18 @@ class ViewController: UIViewController {
     
     func displayInfo() {
         self.titleLabel.text = movie?.title
-        self.plotLabel.text = movie?.plot
+        self.plotField.text = movie?.plot
         self.genreLabel.text = movie?.genre
         self.yearLabel.text = movie?.year
+        self.posterImage.image = movie?.movieImage
+        
+        UIView.animate(withDuration: 0.8) {
+            self.titleLabel.alpha = 1
+            self.plotField.alpha = 1
+            self.genreLabel.alpha = 1
+            self.yearLabel.alpha = 1
+            self.posterImage.alpha = 1
+        }
     }
 }
 

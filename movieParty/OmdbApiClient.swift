@@ -71,7 +71,10 @@ class OmdbApiClient{
         let task = session.dataTask(with: imageURLuw) { (data, response, error) in
             if let data = data {
                 print("image data succesfully found")
-                completion(data)
+                DispatchQueue.main.async {
+                    completion(data)
+                }
+                
             } else {
                 print("image url returned no data")
             }

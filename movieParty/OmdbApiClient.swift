@@ -62,9 +62,11 @@ class OmdbApiClient{
     }
     
     class func getImage(atUrl imageURLString: String, with completion: @escaping (Data) -> Void) {
+        
         print("function to get image from URL has been called")
         var imageURL = URL(string: imageURLString)
         guard let imageURLuw = imageURL else {print("Image could not be found"); return}
+        DispatchQueue.global(qos: .background).async{
         let session = URLSession.shared
         let task = session.dataTask(with: imageURLuw) { (data, response, error) in
             if let data = data {
@@ -75,20 +77,18 @@ class OmdbApiClient{
             }
         }
         task.resume()
+        }
     }
 
     fileprivate class func formatForSearch(_ searchString: String) -> String{
         let temp = searchString.components(separatedBy: CharacterSet(charactersIn: " ,./`!@#$%^&*()_{}|[]<>?:"))
         return temp.joined(separator: "+")
     }
-    
 }
 
 protocol MovieSearchDelegate: class {
-    
     func updateWithNewData(data: [[String:Any]])
     func updateWithDetailedData(data: [String : String])
-    
 }
 
 

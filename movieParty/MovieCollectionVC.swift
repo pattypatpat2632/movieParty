@@ -15,11 +15,14 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
     let store = DataStore.sharedInstance
     var movies: [Movie] = []
     weak var globalMovieSearchBar: UISearchBar!
+    @IBOutlet weak var activityInd: UIActivityIndicatorView!
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityInd.stopAnimating()
+        activityInd.isHidden = true
         let movieSearchBar = UISearchBar()
         navigationItem.titleView = movieSearchBar
         movieSearchBar.sizeToFit()
@@ -45,12 +48,17 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
     }
     
     @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+        activityInd.isHidden = false
+        activityInd.startAnimating()
         guard let searchString = globalMovieSearchBar.text else {return}
         globalMovieSearchBar.text = ""
         movies = []
-        DispatchQueue.main.async{
-        OmdbApiClient.getMeSomeMovies(titleSearch: searchString)
-        self.collectionView?.reloadData()
+        store.removeAllStoredMovies()
+        DispatchQueue.global(qos: .background).async{
+            OmdbApiClient.getMeSomeMovies(titleSearch: searchString)
+                self.collectionView?.reloadData()
+                self.activityInd.stopAnimating()
+                self.activityInd.isHidden = true
        }
     }
     
@@ -63,36 +71,18 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
         collectionView?.collectionViewLayout = layout
     }
     
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == "movieDetailSegue" else {print("segue identifier error"); return}
         let indexPaths = self.collectionView?.indexPathsForSelectedItems
         if let selectedCellNumber = indexPaths?[0].item {
-            OmdbApiClient.getDetailedInfo(forTitle: movies[selectedCellNumber].title)
-            let dest = segue.destination as! ViewController
-            dest.movie = movies[selectedCellNumber]
-            print("selected movie! \(movies[selectedCellNumber].title)")
+            DispatchQueue.global(qos: .background).async {
+                OmdbApiClient.getDetailedInfo(forTitle: self.movies[selectedCellNumber].title)
+                DispatchQueue.main.async {
+                    let dest = segue.destination as! ViewController
+                    dest.movie = self.movies[selectedCellNumber]
+                }
+            }
+            
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
 }

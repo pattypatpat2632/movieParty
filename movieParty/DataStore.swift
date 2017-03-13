@@ -48,10 +48,13 @@ class DataStore: MovieSearchDelegate {
         }
     }
     
+    func removeAllStoredMovies() {
+        self.movies = []
+    }
+    
     func getMovies() -> [Movie] {
         return movies
     }
-    
 }
 
 protocol DataStoreDelegate: class {

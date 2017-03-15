@@ -17,6 +17,8 @@ class OmdbApiClient{
         let titleSearchF = formatForSearch(titleSearch)
         let omdbAddr = "https://omdbapi.com/?s="+titleSearchF
         let omdbUrl = URL(string: omdbAddr)
+        DispatchQueue.global(qos: .background).async {
+         
         let session = URLSession.shared
         guard let omdbUrla = omdbUrl else {print("something fucked up"); return}
         print("URL check complete")
@@ -25,16 +27,21 @@ class OmdbApiClient{
                 guard let data = data else {print("something's not right"); return}
                 print("data received")
                 let sessionData = try JSONSerialization.jsonObject(with: data, options: [])
-                if let searchDict = sessionData as? [String : Any]{
-                    if let searchResults = searchDict["Search"] as? [[String:Any]]{
-                        print("movies found in API Client")
-                        print("sending results to dataStore")
-                        movieSearchDelegate?.updateWithNewData(data: searchResults)
+                DispatchQueue.main.async {
+                    
+                
+                    if let searchDict = sessionData as? [String : Any]{
+                        if let searchResults = searchDict["Search"] as? [[String:Any]]{
+                            print("movies found in API Client")
+                            print("sending results to dataStore")
+                            movieSearchDelegate?.updateWithNewData(data: searchResults)
+                        }
                     }
                 }
             }catch{}
         })
         task.resume()
+        }
     }
     
     class func getDetailedInfo(forTitle title: String) {

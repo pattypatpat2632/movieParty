@@ -54,12 +54,10 @@ class MovieCollectionVC: UICollectionViewController, DataStoreDelegate {
         globalMovieSearchBar.text = ""
         movies = []
         store.removeAllStoredMovies()
-        DispatchQueue.global(qos: .background).async{
             OmdbApiClient.getMeSomeMovies(titleSearch: searchString)
                 self.collectionView?.reloadData()
                 self.activityInd.stopAnimating()
                 self.activityInd.isHidden = true
-       }
     }
     
     func layoutCells() {
